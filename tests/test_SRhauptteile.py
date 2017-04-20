@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# from geometry.SR_line import LineSegment
-# from geometry.SR_point import Point
-# from geometry.SR_polygon import PolygonLine, square, convex_hull
 from SR_Vessel.SR_hauptteile import Mantel, Korbbogenboden, Klopperboden, Flachboden, \
     Behalter, RaumEnde, Rohrboden, KegelKrempe, StandZarge, raum_dict_checker
 import unittest
-import math
-from geometry import PURGE
-import pprint as pp
 
 EPS = 1e-10  # accepted numerical error
 

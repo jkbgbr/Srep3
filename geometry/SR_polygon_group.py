@@ -2,11 +2,8 @@
 
 from geometry.SR_point import EPS
 from geometry.SR_polygon import PolygonLine, convex_hull, remove_outlier_segments, walk_segments
-from collections import deque
 from cached_property import cached_property
 import itertools
-import pprint as pp
-import copy
 from geometry.SR_polygon import TRIANGULATION_ALGORITHM
 from collections import Counter
 

@@ -122,12 +122,12 @@ def linenum():
     import fnmatch
     import os
 
-    dirnames = ['D:\\Srep2\\geometry\\',
-                'D:\\Srep2\\SR_vessel\\',
-                'D:\\Srep2\\tests\\']
-    # dirnames = ['C:\\Users\\X250-User\\PycharmProjects\\Srep2\\geometry\\',
-    #             'C:\\Users\\X250-User\\PycharmProjects\\Srep2\\SR_vessel\\',
-    #             'C:\\Users\\X250-User\\PycharmProjects\\Srep2\\tests\\']
+    # dirnames = ['D:\\Srep2\\geometry\\',
+    #             'D:\\Srep2\\SR_vessel\\',
+    #             'D:\\Srep2\\tests\\']
+    dirnames = ['C:\\Users\\X250-User\\PycharmProjects\\Srep2\\geometry\\',
+                'C:\\Users\\X250-User\\PycharmProjects\\Srep2\\SR_vessel\\',
+                'C:\\Users\\X250-User\\PycharmProjects\\Srep2\\tests\\']
 
     _ret = {}
     for dirn in dirnames:
