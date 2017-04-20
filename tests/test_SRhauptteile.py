@@ -966,7 +966,7 @@ class TestPolygon_Behalter19(unittest.TestCase):
         cls.reu = RaumEnde(name='reu', pos_h=0, pos_v=0, d=4)
         cls.kkr = KegelKrempe(name='kkr', h_non_kegelside=0.4, h_kegelside=0.3, r=0.4, hts=(cls.ma, cls.mau), kegel=cls.kegel)
         cls.beh19 = Behalter([cls.ma, cls.bo, cls.re, cls.kegel, cls.kkr, cls.mau, cls.reu])
-        cls.beh19.plot(cycles=True)
+        # cls.beh19.plot(cycles=True)
 
     def test_kegelbehalter_behalter_1(self):
         self.assertEqual(len(self.beh19.cycles.keys()) == 2, True)
