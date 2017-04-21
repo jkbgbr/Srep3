@@ -250,15 +250,15 @@ class PolygonGroup(object):
         pl.purge()
         return pl
 
-    # @property
-    # def points_numbered(self):
-    #     """
-    #     assigns an integer value for all endpoints. No optimization in the numbering done.
-    #     returns a dict, keys: points, values: integers
-    #     """
-    #     pl = self.representative_graph
-    #
-    #     return {k: v for k, v in zip(pl.point_set, range(len(pl.point_set)))}
+    @property
+    def points_numbered(self):
+        """
+        assigns an integer value for all endpoints. No optimization in the numbering done.
+        returns a dict, keys: points, values: integers
+        """
+        pl = self.representative_graph
+
+        return {k: v for k, v in zip(pl.point_set, range(len(pl.point_set)))}
 
     # @property
     # def numbers_pointed(self):
@@ -299,9 +299,9 @@ class PolygonGroup(object):
     def find_loops(self, graph=None, cycles=None, comblen=None):
         return None
 
-    def branching_number(self, nodes):
-        """ Tells how many in nodes have a degree more than two """
-        return len([x for x in nodes if self.node_degree(_al=self.as_adjacency_list(), node=x)])
+    # def branching_number(self, nodes):
+    #     """ Tells how many in nodes have a degree more than two """
+    #     return len([x for x in nodes if self.node_degree(_al=self.as_adjacency_list(), node=x)])
 
     def node_degree(self, _al, node):
         """ Tells the degree of node based on the adjacency list """
@@ -380,7 +380,7 @@ class BehalterGraph(PolygonGroup):
     @property
     def disjunct_cycles(self):
         """
-        This returns for each cycle the cycles that do not have acommon segment.
+        This returns for each cycle the cycles that do not have a common segment.
         If one cycle completely outside of another one, they are disjunct
         The returned value is a dict, where keys are the cycles, the values are lists of other cycles (if any)
         """
