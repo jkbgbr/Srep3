@@ -12,7 +12,7 @@ import collections
 from cached_property import cached_property
 
 
-TRIANGULATION_ALGORITHM = 'triangle'
+TRIANGULATION_ALGORITHM = 'triangle'  # currently only triangle works
 # TRIANGULATION_ALGORITHM = 'delaunay'
 # possible values are: 'delaunay', 'ear clipping', 'triangle'
 

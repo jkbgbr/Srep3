@@ -5,19 +5,6 @@ This is a module to deal with 2D lines, segments.
 A segment - a LineSegment object - is defined by two endpoints (i, j, both Point objects) and the section between these.
 The direction of the Segment is i -> j.
 The endpoints are part of the SegmentLine. 
-
-Relative position of SegmentLines
-# A: they are is_parallel. self.intersection_point(other) returns None
-# 1: No intersection_point point.
-# 3: they overlap partially.
-# 5: they overlap totally meaning: both endpoints are co-located.
-# 2: they touch, that is, one of the endpoints is co-located. This also means there is an intersection_point Point
-
-# B: They intersect. One intersection_point point, self.intersection_point(other) returns a Point instance.
-# 1: The intersection_point point (IP) is off the segment.
-# 2: The segments touch (on one of the endpoints or on the segment).
-# 3: The intersection_point point is on the segment, not on endpoint
-
 """
 
 
@@ -26,7 +13,6 @@ from geometry.SR_point import Point, EMPTY, distance, EPS
 from geometry import _plotting_available, plt
 from cached_property import cached_property
 import itertools
-import pprint as pp
 import copy
 
 
