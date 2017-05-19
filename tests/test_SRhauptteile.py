@@ -3,6 +3,7 @@
 from SR_Vessel.SR_hauptteile import Mantel, Korbbogenboden, Klopperboden, Flachboden, \
     Behalter, RaumEnde, Rohrboden, KegelKrempe, StandZarge, raum_dict_checker
 import unittest
+import pprint as pp
 
 EPS = 1e-10  # accepted numerical error
 
@@ -955,7 +956,7 @@ class TestPolygon_Behalter18(unittest.TestCase):
 
 class TestPolygon_Behalter19(unittest.TestCase):
 
-    # Behalter mit kegelkrempe uns standzarge. Krempe hat r>0
+    # Behalter mit kegelkrempe und standzarge. Krempe hat r>0
     @classmethod
     def setUpClass(cls):
         cls.re = RaumEnde(name='re', pos_h=0, pos_v=1, d=2)
@@ -966,7 +967,7 @@ class TestPolygon_Behalter19(unittest.TestCase):
         cls.reu = RaumEnde(name='reu', pos_h=0, pos_v=0, d=4)
         cls.kkr = KegelKrempe(name='kkr', h_non_kegelside=0.4, h_kegelside=0.3, r=0.4, hts=(cls.ma, cls.mau), kegel=cls.kegel)
         cls.beh19 = Behalter([cls.ma, cls.bo, cls.re, cls.kegel, cls.kkr, cls.mau, cls.reu])
-        # cls.beh19.plot(cycles=True)
+        cls.beh19.plot(cycles=True)
 
     def test_kegelbehalter_behalter_1(self):
         self.assertEqual(len(self.beh19.cycles.keys()) == 2, True)
