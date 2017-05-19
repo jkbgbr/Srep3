@@ -82,7 +82,7 @@ def raum_dict_checker(dict_to_comapare=None, basedict=None):
     _falses = [x for x in _res if not x]
     # assertions
     if len(_trues) != 1:
-        print('Problem: there should be only one solution to match the dicts, we have %d' % len(_trues))
+        print('Problem: there should be exactly one solution to match the dicts, we have %d' % len(_trues))
         print(_res)
         print('The base dict')
         pp.pprint(_basedict)
