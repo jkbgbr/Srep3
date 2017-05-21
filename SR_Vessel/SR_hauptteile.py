@@ -14,7 +14,7 @@ from cached_property import cached_property
 
 KREMPE_SEGMENTS = 3
 KALOTTE_SEGMENTS = 8
-KEGELKREMPE_SEGMENTS = KREMPE_SEGMENTS * 1
+KEGELKREMPE_SEGMENTS = 3
 
 
 # raum intex hivas eseten minden raum ketszer?
@@ -239,12 +239,18 @@ class Behalter(PolygonGroup):
             # first we find the loops/base cycles/polygons that are
             # the raum, based on the Graph of the PolygonGroup
             # this is quite straightforward and works well by now
+
+            # print('kezodnek a ciklusok')
+
             if isinstance(self, (Graph, BehalterGraph)):
                 _cycles = self.behalter.cycles
             elif isinstance(self, PolygonGroup):
                 _cycles = self.cycles
             else:
                 raise Exception('WTF')
+
+            # pp.pprint(_cycles)
+            # print('megvannak a ciklusok')
 
             for c in _cycles:
 
@@ -269,10 +275,12 @@ class Behalter(PolygonGroup):
                 #     for vv in v:
                 #         print(vv)
                 #         vv.plot(show=False)
-                #     vv.plot(show=True, title='aussere')
+                #     vv.plot(show=True, title='aussere', annotate=True)
 
                 # innere Wandung
                 if self.contained_cycles[c]:
+
+                    # print('there are internal walls')
 
                     _cycles_to_check = self.contained_cycles[c]
                     # first, check the cycles that are overlapping (if any)
@@ -362,16 +370,23 @@ class Behalter(PolygonGroup):
 
         selfcopy = copy.deepcopy(self)
 
+        # print('')
         for r in selfcopy.raume:
+            # print('raum: %s' % r.name)
             raum_graph = r.graph_as_polygon()  # ein Polygon, representiert den Graph
 
             # here should made sure no outliers are present
             simplify(raum_graph)
-            # raum_graph.plot(show=True)
+            # raum_graph.plot(show=True, title=r.name)
             raum_graph.triangulate()
-
+            # print('')
             for ht in (x for x in r.ganze_wandung if x in itertools.chain(r.aussere_wandung, r.innere_wandung)):
+                # print(ht.name)
                 ht_graph = ht.graph
+                # print(ht_graph)
+                # print('internal', ht_graph.internal)
+                # print('external', ht_graph.external)
+                # print('indifferent', ht_graph.indifferent)
 
                 if ht_graph.internal:
                     # print('')
@@ -383,6 +398,8 @@ class Behalter(PolygonGroup):
                             _ret[ht.name]['innenraum'].add(r.name)
                             # print(ht.name + '-hoz ' + r.name + ' mint internal')
                         # ht_graph.plot(show=True, also_plot=_internal)
+                        # else:
+                        #     print('NEM' + ht.name + '-hoz ' + r.name + ' mint internal')
 
                 # pp.pprint(_ret)
                 if ht_graph.external:
@@ -394,6 +411,8 @@ class Behalter(PolygonGroup):
                         if all((raum_graph.is_internal_point(p=P) for P in _external)):
                             _ret[ht.name]['aussenraum'].add(r.name)
                             # print(ht.name + '-hoz ' + r.name + ' mint external')
+                        # else:
+                        #     print('NEM' + ht.name + '-hoz ' + r.name + ' mint external')
 
                 # pp.pprint(_ret)
                 if ht_graph.indifferent:
@@ -404,6 +423,9 @@ class Behalter(PolygonGroup):
                         if not all((raum_graph.is_internal_point(p=P) for P in _indifferent)):
                             _ret[ht.name]['indifferent'].add(r.name)
                             # print(ht.name + '-hoz ' + r.name + ' mint indifferent')
+                        # else:
+                        #     print('NEM' + ht.name + '-hoz ' + r.name + ' mint indifferent')
+
         return _ret
 
     def plot(self, cycles=True, annotate=False):
@@ -636,7 +658,7 @@ class Mantel(Hauptteil):
             # the endpoints of a segment in ascending order vertically; lower, upper points
             _lp, _up = sorted(s.ij, key=lambda x: x.y)
             # "unit" for _lp, _up
-            _e = [abs(min((_up.y - _lp.y) / 10., min((_p.x - self.pos_h) / 500., 20))) for _p in (_lp, _up)]
+            _e = [abs(min((_up.y - _lp.y) / 10., min((_p.x - self.pos_h) / 50000., .0020))) for _p in (_lp, _up)]
             # we create four points, two at each end of the segments
             for ratio in [0.01, 0.99]:
                 _tp = point_on_line_at_ratio(line=s, ratio=ratio)
@@ -1293,6 +1315,7 @@ class RaumEnde(Hauptteil):
         fb.move(x0=pos_h, y0=pos_v)
         super(RaumEnde, self).__init__(typ='raumende', segments=[fb])
         self._graph = Graph(hauptteil=self)
+        self.graph.add_intex_points()
 
     @classmethod
     def from_dict(cls, adict):
@@ -1311,6 +1334,13 @@ class RaumEnde(Hauptteil):
 
     @property
     def intex_points(self):
+        """
+        RaumEnde hat keine intex punkte.
+        
+        Die Idee dahinter ist, dass diese bleiben unberechnet. Allerdings, soll es hier entschlossen werden?
+        
+        :return: 
+        """
         _ret = {}
         for s in self.wall_segments:
             _ret[s] = {'internal': [], 'external': [], 'indifferent': []}
@@ -1330,9 +1360,10 @@ def run():
     bo = Korbbogenboden(name='bo', pos_h=0, pos_v=3.5, d=4, h1=0.1, orient=1)
     mau = Mantel(name='mau', pos_h=0, pos_v=0, d=(4, 4), h=2)
     reu = RaumEnde(name='reu', pos_h=0, pos_v=0, d=4)
-    kkr = KegelKrempe(name='kkr', h_non_kegelside=0.4, h_kegelside=0.3, r=0.616, hts=(ma, mau), kegel=kegel)
+    kkr = KegelKrempe(name='kkr', h_non_kegelside=0.4, h_kegelside=0.3, r=0.4, hts=(ma, mau), kegel=kegel)
     beh19 = Behalter([ma, bo, re, kegel, kkr, mau, reu])
     beh19.plot(cycles=False)
+    pp.pprint(beh19.raum_intex())
 
 if __name__ == '__main__':
 
