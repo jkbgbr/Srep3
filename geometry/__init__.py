@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 # try to import matplotlib to enable visualisation
 try:
     import matplotlib.pyplot as plt
