@@ -794,15 +794,15 @@ class TorispherischesBoden(Hauptteil):
         h1 = self.h1
 
         if self.__class__.__name__ == 'Klopperboden':
-            R1 = 1. * d
-            R2 = 0.1 * d
+            R1 = 1. * d  # kalotte
+            R2 = 0.1 * d  # krempe
         elif self.__class__.__name__ == 'Korbbogenboden':
-            R1 = 0.8 * d
-            R2 = 0.154 * d
+            R1 = 0.8 * d  # kalotte
+            R2 = 0.154 * d  # krempe
         else:
             raise Exception('WTF')
 
-        h = math.sqrt(((R1 - R2) ** 2) - ((d / 2. - R2) ** 2))  # Abstand RN bis Mittelpkt. Kalottenkugel
+        h = math.sqrt(((R1 - R2) ** 2) - ((d / 2. - R2) ** 2))  # Abstand TL bis Mittelpkt. Kalottenkugel
         alpha = math.degrees(math.acos(h/(R1 - R2)))  # halbe öffnungswinkel Kalottenkugel
         delta = 90 - alpha  # Öffnungswinkel Krempe
 
