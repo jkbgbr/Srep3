@@ -547,6 +547,11 @@ class BehalterGraph(PolygonGroup):
         returned is a sorted list of closed, ordered, valid polygons that are potential candidates to be raum
         """
 
+        # possble alternative is here:
+        # https: // stackoverflow.com / questions / 40833612 / find - all - cycles - in -a - graph - implementation
+        # https: // stackoverflow.com / questions / 546655 / finding - all - cycles - in -a - directed - graph
+        # https: // algocoding.wordpress.com / 2015 / 04 / 02 / detecting - cycles - in -a - directed - graph - with-dfs - python /
+
         # first loop: no input - initialization
         if graph is None:
             graph = list(set(self.all_segments))
